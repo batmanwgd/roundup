@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -79,8 +80,8 @@ public class TransactionFeedProviderIntegrationTest {
                 "ac82f660-5442-4b78-9038-2b72b1206390",
                 "2eb42e49-f275-4019-8707-81a0637e7206"
         );
-        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
-        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 16);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
         List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
 
@@ -91,6 +92,7 @@ public class TransactionFeedProviderIntegrationTest {
         assertEquals("OUT", first.getDirection());
         assertEquals(3909, first.getAmount().getMinorUnits());
         assertEquals("GBP", first.getAmount().getCurrency());
+        assertEquals( ZonedDateTime.parse("2020-03-22T17:02:52.803Z[UTC]"), first.getTransactionTime());
     }
 
     @Test
@@ -104,8 +106,8 @@ public class TransactionFeedProviderIntegrationTest {
                 "badAccountUID",
                 "2eb42e49-f275-4019-8707-81a0637e7206"
         );
-        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
-        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 16);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
         Exception exception = assertThrows(Exception.class, () -> {
             transactionFeedProvider.fetch(account, from, to);
@@ -125,8 +127,8 @@ public class TransactionFeedProviderIntegrationTest {
                 "ac82f660-5442-4b78-9038-2b72b1206390",
                 "badDefaultCategory"
         );
-        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
-        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 16);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
         Exception exception = assertThrows(Exception.class, () -> {
             transactionFeedProvider.fetch(account, from, to);
