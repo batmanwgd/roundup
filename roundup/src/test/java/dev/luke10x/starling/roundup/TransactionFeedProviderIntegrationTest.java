@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -68,5 +69,10 @@ public class TransactionFeedProviderIntegrationTest {
 
         assertNotNull(feed);
         assertTrue(feed.getFeedItems().size() > 0);
+
+        FeedItem first = feed.getFeedItems().get(0);
+        assertEquals("OUT", first.getDirection());
+        assertEquals(3909, first.getAmount().getMinorUnits());
+        assertEquals("GBP", first.getAmount().getCurrency());
     }
 }

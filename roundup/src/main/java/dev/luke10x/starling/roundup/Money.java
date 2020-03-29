@@ -1,14 +1,17 @@
 package dev.luke10x.starling.roundup;
 
 public class Money {
-    private final String currency;
-    private final int minorUnits;
+    private String currency;
+    private int minorUnits;
+
+    public Money() {}
+
     public Money(String currency, int minorUnits) {
         this.currency = currency;
         this.minorUnits = minorUnits;
     }
 
-    public String getCurrecy() {
+    public String getCurrency() {
         return currency;
     }
 

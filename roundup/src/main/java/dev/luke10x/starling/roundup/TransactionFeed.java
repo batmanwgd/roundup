@@ -15,5 +15,4 @@ public class TransactionFeed {
     public List<FeedItem> getFeedItems() {
         return feedItems;
     }
-
 }

@@ -65,7 +65,7 @@ public class AccountRoundupCollectorTest {
 
         Money roundup = accountRoundupCollector.collectRoundup(from);
 
-        assertEquals("GBP", roundup.getCurrecy());
+        assertEquals("GBP", roundup.getCurrency());
         assertEquals(1000, roundup.getMinorUnits());
     }
 }
