@@ -1,5 +1,7 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.http;
 
+import dev.luke10x.starling.roundup.AccountsProvider;
+import dev.luke10x.starling.roundup.RoundupApplication;
 import dev.luke10x.starling.roundup.accounts.Account;
 import dev.luke10x.starling.roundup.accounts.AccountsResponse;
 import org.junit.jupiter.api.*;
@@ -58,7 +60,7 @@ public class AccountProviderIntegrationTest {
     void fetchesAccountsResponseFromHttpApi() {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
-        AccountsProvider accountsProvider = new AccountsProvider(restTemplate, starlingHost);
+        AccountsProvider accountsProvider = new HttpAccountsProvider(restTemplate, starlingHost);
 
         AccountsResponse response = accountsProvider.fetch();
 
@@ -69,7 +71,7 @@ public class AccountProviderIntegrationTest {
     void firstAccountHasAccountUidAndCategoryUid() {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
-        AccountsProvider accountsProvider = new AccountsProvider(restTemplate, starlingHost);
+        AccountsProvider accountsProvider = new HttpAccountsProvider(restTemplate, starlingHost);
 
         AccountsResponse response = accountsProvider.fetch();
 
