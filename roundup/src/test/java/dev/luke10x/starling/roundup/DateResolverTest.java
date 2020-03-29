@@ -1,6 +1,5 @@
 package dev.luke10x.starling.roundup;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -42,7 +41,6 @@ public class DateResolverTest {
     }
 
     @Test
-    @Disabled
     void secondWeekOf2020StartsOnThisYear6OfJanuary() {
         DateResolver dateResolver = new DateResolver();
 
