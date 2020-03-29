@@ -1,4 +1,4 @@
-package dev.luke10x.starling.roundup.backend;
+package dev.luke10x.starling.roundup;
 
 import java.time.LocalDate;
 

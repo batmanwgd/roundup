@@ -1,4 +1,4 @@
-package dev.luke10x.starling.roundup.backend;
+package dev.luke10x.starling.roundup;
 
 public class TransactionFeedCalculator {
     public Money calculate(TransactionFeed feed) {
