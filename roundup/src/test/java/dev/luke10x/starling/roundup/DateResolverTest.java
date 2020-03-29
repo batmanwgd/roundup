@@ -1,12 +1,10 @@
 package dev.luke10x.starling.roundup;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +29,6 @@ public class DateResolverTest {
      */
 
     @Test
-    @Disabled
     void firstWeekOf2020StartsOnPreviousYear30OfDecember() {
         DateResolver dateResolver = new DateResolver();
 
