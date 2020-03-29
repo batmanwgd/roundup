@@ -7,6 +7,12 @@ public class FeedItem {
 
     public FeedItem() {}
 
+    public FeedItem(String direction, Money amount) {
+
+        this.direction = direction;
+        this.amount = amount;
+    }
+
     public String getDirection() {
         return direction;
     }

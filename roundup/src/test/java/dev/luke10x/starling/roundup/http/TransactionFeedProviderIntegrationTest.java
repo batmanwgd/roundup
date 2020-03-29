@@ -65,7 +65,7 @@ public class TransactionFeedProviderIntegrationTest {
     RestTemplate restTemplate;
 
     @Test
-    void fetchesFeedFromHttp() throws IOException, FeedNotFoundException {
+    void fetchesFeedFromHttp() throws FeedNotFoundException {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
@@ -123,7 +123,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         Exception exception = assertThrows(Exception.class, () -> {
             transactionFeedProvider.fetch(account, from);
-       });
+        });
 
         assertThat(exception, instanceOf(FeedNotFoundException.class));
     }
