@@ -28,9 +28,9 @@ public class AccountRoundupCollector {
         Account account = accountsProvider.fetch().getAccounts().get(0);
         try {
             TransactionFeed feed = transactionFeedProvider.fetch(account, from);
-            transactionFeedCalculator.calculate(feed);
+            Money roundup = transactionFeedCalculator.calculate(feed);
 
-            RoundupCalculatedEvent event = new RoundupCalculatedEvent(from, account);
+            RoundupCalculatedEvent event = new RoundupCalculatedEvent(from, account, roundup);
             roundupCalculatedEventListener.onRoundupCalculated(event);
         } catch (FeedNotFoundException e) {
             throw new RuntimeException(e);

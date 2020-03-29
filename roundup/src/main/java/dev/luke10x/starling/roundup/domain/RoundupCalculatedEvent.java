@@ -8,10 +8,12 @@ import java.time.LocalDate;
 public class RoundupCalculatedEvent {
     private final LocalDate from;
     private Account account;
+    private Money roundup;
 
-    public RoundupCalculatedEvent(LocalDate from, Account account) {
+    public RoundupCalculatedEvent(LocalDate from, Account account, Money roundup) {
         this.from = from;
         this.account = account;
+        this.roundup = roundup;
     }
 
     public LocalDate getFrom() {
@@ -23,6 +25,6 @@ public class RoundupCalculatedEvent {
     }
 
     public Money getRoundup() {
-        return null;
+        return roundup;
     }
 }
