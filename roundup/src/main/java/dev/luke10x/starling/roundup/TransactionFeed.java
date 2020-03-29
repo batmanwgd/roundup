@@ -7,7 +7,13 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionFeed {
-    public List<FeedItem> getFeedItems() {
-        return new ArrayList<FeedItem>();
+
+    private List<FeedItem> feedItems;
+    public TransactionFeed() {
     }
+
+    public List<FeedItem> getFeedItems() {
+        return feedItems;
+    }
+
 }
