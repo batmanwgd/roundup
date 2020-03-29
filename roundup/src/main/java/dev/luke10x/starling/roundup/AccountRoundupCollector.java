@@ -22,11 +22,6 @@ public class AccountRoundupCollector {
     }
 
     public Money collectRoundup(LocalDate from) {
-        final long calendarWeek = 11;
-        LocalDate desiredDate = LocalDate.of(2020, 1, 1)
-                .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, calendarWeek)
-                .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-
         TransactionFeed feed = transactionFeedProvider.fetch(from);
         return transactionFeedCalculator.calculate(feed);
     }
