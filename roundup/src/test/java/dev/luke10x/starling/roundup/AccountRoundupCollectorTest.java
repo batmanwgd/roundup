@@ -1,5 +1,6 @@
 package dev.luke10x.starling.roundup;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,6 +21,22 @@ public class AccountRoundupCollectorTest {
     @Mock TransactionFeedProvider transactionFeedProvider;
 
     @Mock TransactionFeedCalculator transactionFeedCalculator;
+
+    @Test
+    @Disabled
+    void fetchesFeedByItsStartingDate() {
+        LocalDate startingDate = LocalDate.of(2020, Month.JANUARY, 10);
+        LocalDate anotherDate = LocalDate.of(2020, Month.FEBRUARY, 20);
+        AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
+                transactionFeedProvider,
+                transactionFeedCalculator
+        );
+
+        accountRoundupCollector.collectRoundup(startingDate);
+
+        verify(transactionFeedProvider, never()).fetch(anotherDate);
+        verify(transactionFeedProvider).fetch(startingDate);
+    }
 
     @Test
     void calculatesAmountFromFetchedFeed() {
