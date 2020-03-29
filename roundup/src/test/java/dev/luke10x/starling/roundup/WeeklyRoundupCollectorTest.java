@@ -1,18 +1,35 @@
 package dev.luke10x.starling.roundup.backend;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class})
 public class WeeklyRoundupCollectorTest {
 
-    @Mock
-    TransactionFeedCalculator transactionFeedCalculator;
+    @Mock TransactionFeedProvider transactionFeedProvider;
+
+    @Mock TransactionFeedCalculator transactionFeedCalculator;
+
+    @Test
+    @Disabled
+    void calculatesAmountFromFetchedFeed() {
+        TransactionFeed fetchedFeed = new TransactionFeed();
+        TransactionFeed anotherFeed = new TransactionFeed();
+        when(transactionFeedProvider.fetch(any())).thenReturn(fetchedFeed);
+
+        WeeklyRoundupCollector weeklyRoundupCollector = new WeeklyRoundupCollector(transactionFeedCalculator);
+
+        verify(transactionFeedCalculator, never()).calculate(anotherFeed);
+        verify(transactionFeedCalculator).calculate(fetchedFeed);
+    }
 
     @Test
     void returnsCalculatedAmount() {
