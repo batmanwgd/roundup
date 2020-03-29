@@ -5,12 +5,12 @@ import java.time.LocalDate;
 import java.time.temporal.IsoFields;
 import java.time.temporal.TemporalAdjusters;
 
-public class RoundupCollector {
+public class AccountRoundupCollector {
 
     private final TransactionFeedProvider transactionFeedProvider;
     private final TransactionFeedCalculator transactionFeedCalculator;
     
-    public RoundupCollector(
+    public AccountRoundupCollector(
             TransactionFeedProvider transactionFeedProvider,
             TransactionFeedCalculator transactionFeedCalculator
     ) {
