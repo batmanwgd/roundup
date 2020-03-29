@@ -21,13 +21,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class})
-public class AccountRoundupCollectorTest {
+public class RoundupCollectorTest {
 
     @Mock
-    TransactionFeedProvider transactionFeedProvider;
+    FeedProvider feedProvider;
 
     @Mock
-    TransactionFeedCalculator transactionFeedCalculator;
+    FeedCalculator feedCalculator;
 
     @Mock
     AccountsProvider accountsProvider;
@@ -46,16 +46,16 @@ public class AccountRoundupCollectorTest {
         LocalDate startingDate = LocalDate.of(2020, Month.JANUARY, 10);
         LocalDate tillDate = LocalDate.of(2020, Month.JANUARY, 10);
         LocalDate anotherDate = LocalDate.of(2020, Month.FEBRUARY, 20);
-        AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
+        RoundupCollector roundupCollector = new RoundupCollector(
                 accountsProvider,
-                transactionFeedProvider,
-                transactionFeedCalculator,
+                feedProvider,
+                feedCalculator,
                 roundupCalculatedEventListener);
 
-        accountRoundupCollector.collectRoundup(startingDate, startingDate);
+        roundupCollector.collectRoundup(startingDate, startingDate);
 
-        verify(transactionFeedProvider, never()).fetch(account, anotherDate, tillDate);
-        verify(transactionFeedProvider).fetch(account, startingDate, tillDate);
+        verify(feedProvider, never()).fetch(account, anotherDate, tillDate);
+        verify(feedProvider).fetch(account, startingDate, tillDate);
     }
 
     private AccountsResponse buildAccountsResponse(Account account) {
@@ -75,18 +75,18 @@ public class AccountRoundupCollectorTest {
         List<FeedItem> fetchedFeedItems = List.of(new FeedItem());
         List<FeedItem> anotherFeedItems = List.of(new FeedItem());
 
-        when(transactionFeedProvider.fetch(any(), any(), any())).thenReturn(fetchedFeedItems);
+        when(feedProvider.fetch(any(), any(), any())).thenReturn(fetchedFeedItems);
 
-        AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
-                accountsProvider, transactionFeedProvider,
-                transactionFeedCalculator,
+        RoundupCollector roundupCollector = new RoundupCollector(
+                accountsProvider, feedProvider,
+                feedCalculator,
                 roundupCalculatedEventListener);
         LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
 
-        accountRoundupCollector.collectRoundup(from, from);
+        roundupCollector.collectRoundup(from, from);
 
-        verify(transactionFeedCalculator, never()).calculate(anotherFeedItems);
-        verify(transactionFeedCalculator).calculate(fetchedFeedItems);
+        verify(feedCalculator, never()).calculate(anotherFeedItems);
+        verify(feedCalculator).calculate(fetchedFeedItems);
     }
 
     @Test
@@ -99,16 +99,16 @@ public class AccountRoundupCollectorTest {
         when(accountsProvider.fetch()).thenReturn(accountsResponse);
 
         Money roundup = new Money("GBP", 1000);
-        when(transactionFeedCalculator.calculate(any())).thenReturn(roundup);
-        AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
+        when(feedCalculator.calculate(any())).thenReturn(roundup);
+        RoundupCollector roundupCollector = new RoundupCollector(
                 accountsProvider,
-                transactionFeedProvider,
-                transactionFeedCalculator,
+                feedProvider,
+                feedCalculator,
                 roundupCalculatedEventListener
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
 
-        accountRoundupCollector.collectRoundup(from, from);
+        roundupCollector.collectRoundup(from, from);
 
         verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
                 event -> event.getFrom().equals(from)

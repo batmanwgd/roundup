@@ -2,7 +2,6 @@ package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.Money;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,12 +12,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({MockitoExtension.class})
-public class TransactionFeedCalculatorTest {
+public class FeedCalculatorTest {
 
     @Test
     void sumsUpRoundupOfAllFeedItems() {
 
-        TransactionFeedCalculator transactionFeedCalculator = new TransactionFeedCalculator();
+        FeedCalculator feedCalculator = new FeedCalculator();
 
         List<FeedItem> feedItems = new LinkedList<>();
         feedItems.add(new FeedItem(
@@ -34,7 +33,7 @@ public class TransactionFeedCalculatorTest {
                 new Money("GBP", 87)
         ));
 
-        Money roundup = transactionFeedCalculator.calculate(feedItems);
+        Money roundup = feedCalculator.calculate(feedItems);
 
         assertEquals("GBP", roundup.getCurrency());
         assertEquals(158, roundup.getMinorUnits());

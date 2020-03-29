@@ -10,28 +10,28 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class AccountRoundupCollector {
+public class RoundupCollector {
 
     private AccountsProvider accountsProvider;
-    private final TransactionFeedProvider transactionFeedProvider;
-    private final TransactionFeedCalculator transactionFeedCalculator;
+    private final FeedProvider feedProvider;
+    private final FeedCalculator feedCalculator;
     private RoundupCalculatedEventListener roundupCalculatedEventListener;
 
-    public AccountRoundupCollector(
-            AccountsProvider accountsProvider, TransactionFeedProvider transactionFeedProvider,
-            TransactionFeedCalculator transactionFeedCalculator,
+    public RoundupCollector(
+            AccountsProvider accountsProvider, FeedProvider feedProvider,
+            FeedCalculator feedCalculator,
             RoundupCalculatedEventListener roundupCalculatedEventListener) {
         this.accountsProvider = accountsProvider;
-        this.transactionFeedProvider = transactionFeedProvider;
-        this.transactionFeedCalculator = transactionFeedCalculator;
+        this.feedProvider = feedProvider;
+        this.feedCalculator = feedCalculator;
         this.roundupCalculatedEventListener = roundupCalculatedEventListener;
     }
 
     public void collectRoundup(LocalDate from, LocalDate to) {
         Account account = accountsProvider.fetch().getAccounts().get(0);
         try {
-            List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
-            Money roundup = transactionFeedCalculator.calculate(feedItems);
+            List<FeedItem> feedItems = feedProvider.fetch(account, from, to);
+            Money roundup = feedCalculator.calculate(feedItems);
 
             RoundupCalculatedEvent event = new RoundupCalculatedEvent(from, account, roundup);
             roundupCalculatedEventListener.onRoundupCalculated(event);

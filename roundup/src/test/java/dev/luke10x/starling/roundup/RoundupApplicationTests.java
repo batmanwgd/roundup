@@ -1,11 +1,11 @@
 package dev.luke10x.starling.roundup;
 
-import dev.luke10x.starling.roundup.domain.AccountRoundupCollector;
+import dev.luke10x.starling.roundup.domain.RoundupCollector;
 import dev.luke10x.starling.roundup.domain.DateResolver;
 import dev.luke10x.starling.roundup.domain.RoundupCommand;
-import dev.luke10x.starling.roundup.domain.TransactionFeedCalculator;
+import dev.luke10x.starling.roundup.domain.FeedCalculator;
 import dev.luke10x.starling.roundup.http.HttpAccountsProvider;
-import dev.luke10x.starling.roundup.http.HttpTransactionFeedProvider;
+import dev.luke10x.starling.roundup.http.HttpFeedProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,19 +18,19 @@ import org.springframework.test.context.TestPropertySource;
 class RoundupApplicationTests {
 
     @Autowired
-    TransactionFeedCalculator transactionFeedCalculator;
+    FeedCalculator feedCalculator;
 
     @Autowired
     HttpAccountsProvider accountsProvider;
 
     @Autowired
-    HttpTransactionFeedProvider transactionFeedProvider;
+    HttpFeedProvider transactionFeedProvider;
 
     @Autowired
     DateResolver dateResolver;
 
     @Autowired
-    AccountRoundupCollector accountRoundupCollector;
+    RoundupCollector roundupCollector;
 
     @Autowired
     RoundupCommand roundupCommand;

@@ -1,7 +1,7 @@
 package dev.luke10x.starling.roundup.http;
 
 import dev.luke10x.starling.roundup.RoundupApplication;
-import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.FeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableConfigurationProperties
 @TestPropertySource(locations="classpath:test.properties")
 @ActiveProfiles("test")
-public class TransactionFeedProviderIntegrationTest {
+public class HttpFeedProviderIntegrationTest {
 
     static private ClientAndServer starlingAPI;
 
@@ -74,7 +74,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
-        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+        FeedProvider feedProvider = new HttpFeedProvider(restTemplate, starlingHost);
 
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
@@ -83,7 +83,7 @@ public class TransactionFeedProviderIntegrationTest {
         LocalDate from = LocalDate.of(2020, Month.MARCH, 16);
         LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
-        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
+        List<FeedItem> feedItems = feedProvider.fetch(account, from, to);
 
         assertNotNull(feedItems);
         assertTrue(feedItems.size() > 0);
@@ -100,7 +100,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
-        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+        FeedProvider feedProvider = new HttpFeedProvider(restTemplate, starlingHost);
 
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
@@ -109,7 +109,7 @@ public class TransactionFeedProviderIntegrationTest {
         LocalDate from = LocalDate.of(2020, Month.MARCH, 9);
         LocalDate to = LocalDate.of(2020, Month.MARCH, 16);
 
-        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
+        List<FeedItem> feedItems = feedProvider.fetch(account, from, to);
 
         assertNotNull(feedItems);
         assertTrue(feedItems.size() == 0);
@@ -120,7 +120,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
-        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+        FeedProvider feedProvider = new HttpFeedProvider(restTemplate, starlingHost);
 
         Account account = new Account(
                 "badAccountUID",
@@ -130,7 +130,7 @@ public class TransactionFeedProviderIntegrationTest {
         LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            transactionFeedProvider.fetch(account, from, to);
+            feedProvider.fetch(account, from, to);
         });
 
         assertThat(exception, instanceOf(FeedNotFoundException.class));
@@ -141,7 +141,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
-        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+        FeedProvider feedProvider = new HttpFeedProvider(restTemplate, starlingHost);
 
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
@@ -151,7 +151,7 @@ public class TransactionFeedProviderIntegrationTest {
         LocalDate to = LocalDate.of(2020, Month.MARCH, 23);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            transactionFeedProvider.fetch(account, from, to);
+            feedProvider.fetch(account, from, to);
         });
 
         assertThat(exception, instanceOf(FeedNotFoundException.class));

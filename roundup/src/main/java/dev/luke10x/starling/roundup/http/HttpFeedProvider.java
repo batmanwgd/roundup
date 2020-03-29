@@ -1,10 +1,10 @@
 package dev.luke10x.starling.roundup.http;
 
-import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.FeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
+import dev.luke10x.starling.roundup.domain.feed.FeedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,15 +19,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class HttpTransactionFeedProvider implements TransactionFeedProvider {
+public class HttpFeedProvider implements FeedProvider {
 
     private static Logger LOG = LoggerFactory
-            .getLogger(HttpTransactionFeedProvider.class);
+            .getLogger(HttpFeedProvider.class);
 
     private RestTemplate restTemplate;
     private String starlingHost;
 
-    public HttpTransactionFeedProvider(
+    public HttpFeedProvider(
             RestTemplate restTemplate,
             @Value("${roundup.starling_host}") String starlingHost
     ) {
@@ -44,7 +44,7 @@ public class HttpTransactionFeedProvider implements TransactionFeedProvider {
 
         try {
             return Objects.requireNonNull(restTemplate
-                    .getForObject(url, TransactionFeed.class))
+                    .getForObject(url, FeedResponse.class))
                     .getFeedItems()
                     .stream()
                     .filter(

@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(classes = { RoundupApplication.class })
 @TestPropertySource(locations="classpath:test.properties")
 @ActiveProfiles("test")
-public class AccountProviderIntegrationTest {
+public class HttpAccountsProviderIntegrationTest {
 
     static private ClientAndServer starlingAPI;
 
@@ -40,7 +40,6 @@ public class AccountProviderIntegrationTest {
                 .withMethod("GET")
                 .withPath("/api/v2/accounts")
                 .withHeader("Authorization", "Bearer Test-Valid-Access-Token");
-
 
         File file = new File(getClass().getClassLoader().getResource("./accounts-response.json").getPath());
         byte[] fixture = Files.readAllBytes(file.toPath());

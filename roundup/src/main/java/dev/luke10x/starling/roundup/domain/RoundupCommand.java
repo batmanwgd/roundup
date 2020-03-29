@@ -7,14 +7,14 @@ import java.time.LocalDate;
 @Component
 public class RoundupCommand {
     private DateResolver dateResolver;
-    private AccountRoundupCollector accountRoundupCollector;
+    private RoundupCollector roundupCollector;
 
     public RoundupCommand(
             DateResolver dateResolver,
-            AccountRoundupCollector accountRoundupCollector
+            RoundupCollector roundupCollector
     ) {
         this.dateResolver = dateResolver;
-        this.accountRoundupCollector = accountRoundupCollector;
+        this.roundupCollector = roundupCollector;
     }
 
     public void execute(int year, int weekOfTheYear) {
@@ -22,6 +22,6 @@ public class RoundupCommand {
         LocalDate to = dateResolver.resolve(year, weekOfTheYear+1);
 
 
-        accountRoundupCollector.collectRoundup(from, to);
+        roundupCollector.collectRoundup(from, to);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class TransactionFeedCalculator {
+public class FeedCalculator {
     public Money calculate(List<FeedItem> feedItems) {
         Money feedRoundup = feedItems.stream()
                 .map(item -> item.getAmount())

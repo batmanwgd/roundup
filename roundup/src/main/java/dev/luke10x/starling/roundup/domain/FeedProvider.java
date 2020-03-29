@@ -7,6 +7,6 @@ import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface TransactionFeedProvider {
+public interface FeedProvider {
     List<FeedItem> fetch(Account account, LocalDate from, LocalDate to) throws FeedNotFoundException;
 }

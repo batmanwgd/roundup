@@ -18,11 +18,11 @@ public class RoundupCommandTest {
     @Mock
     DateResolver dateResolver;
     @Mock
-    AccountRoundupCollector accountRoundupCollector;
+    RoundupCollector roundupCollector;
 
     @Test
     void resolvesDateFromPassedYearAndWeek() {
-        RoundupCommand roundupCommand = new RoundupCommand(dateResolver, accountRoundupCollector);
+        RoundupCommand roundupCommand = new RoundupCommand(dateResolver, roundupCollector);
 
         roundupCommand.execute(2020, 22);
 
@@ -38,11 +38,11 @@ public class RoundupCommandTest {
         when(dateResolver.resolve(2020, 11)).thenReturn(resolvedFromDate);
         when(dateResolver.resolve(2020, 12)).thenReturn(resolvedToDate);
 
-        RoundupCommand roundupCommand = new RoundupCommand(dateResolver, accountRoundupCollector);
+        RoundupCommand roundupCommand = new RoundupCommand(dateResolver, roundupCollector);
 
         roundupCommand.execute(2020, 11);
 
-        verify(accountRoundupCollector, never()).collectRoundup(anotherDate, resolvedToDate);
-        verify(accountRoundupCollector).collectRoundup(resolvedFromDate, resolvedToDate);
+        verify(roundupCollector, never()).collectRoundup(anotherDate, resolvedToDate);
+        verify(roundupCollector).collectRoundup(resolvedFromDate, resolvedToDate);
     }
 }
