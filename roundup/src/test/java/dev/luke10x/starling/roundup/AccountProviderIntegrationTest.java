@@ -66,7 +66,6 @@ public class AccountProviderIntegrationTest {
     }
 
     @Test
-    @Disabled
     void firstAccountHasAccountUidAndCategoryUid() {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
