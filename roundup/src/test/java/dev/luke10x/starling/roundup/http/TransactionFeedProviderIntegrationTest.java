@@ -1,5 +1,7 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.http;
 
+import dev.luke10x.starling.roundup.RoundupApplication;
+import dev.luke10x.starling.roundup.TransactionFeedProvider;
 import dev.luke10x.starling.roundup.feed.FeedItem;
 import dev.luke10x.starling.roundup.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
@@ -64,7 +66,7 @@ public class TransactionFeedProviderIntegrationTest {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
-        TransactionFeedProvider transactionFeedProvider = new TransactionFeedProvider(restTemplate, starlingHost);
+        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
 
         TransactionFeed feed = transactionFeedProvider
                 .fetch(LocalDate.of(2020, Month.MARCH, 20));
