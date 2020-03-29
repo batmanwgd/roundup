@@ -4,6 +4,7 @@ import dev.luke10x.starling.roundup.RoundupApplication;
 import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
+import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +23,9 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith({MockitoExtension.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -85,5 +86,45 @@ public class TransactionFeedProviderIntegrationTest {
         assertEquals("OUT", first.getDirection());
         assertEquals(3909, first.getAmount().getMinorUnits());
         assertEquals("GBP", first.getAmount().getCurrency());
+    }
+
+    @Test
+    void failFetchingFeedForNotExistingAccount() {
+
+        String starlingHost = "http://localhost:" + starlingAPI.getPort();
+
+        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+
+        Account account = new Account(
+                "badAccountUID",
+                "2eb42e49-f275-4019-8707-81a0637e7206"
+        );
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            transactionFeedProvider.fetch(account, from);
+        });
+
+        assertThat(exception, instanceOf(FeedNotFoundException.class));
+    }
+
+    @Test
+    void failFetchingFeedForNotExistingDefaultCategory() {
+
+        String starlingHost = "http://localhost:" + starlingAPI.getPort();
+
+        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+
+        Account account = new Account(
+                "ac82f660-5442-4b78-9038-2b72b1206390",
+                "badDefaultCategory"
+        );
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            transactionFeedProvider.fetch(account, from);
+       });
+
+        assertThat(exception, instanceOf(FeedNotFoundException.class));
     }
 }
