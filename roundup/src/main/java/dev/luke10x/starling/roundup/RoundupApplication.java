@@ -55,7 +55,7 @@ public class RoundupApplication {
 
             LOG.info("ROUNDUP_STARLING_HOST: "+starlingHost);
             LOG.info("ROUNDUP_ACCESS_TOKEN: "+roundupAccessToken);
-            LOG.info("EXECUTING : command line runner for year: "+year+", week: "+week);
+            LOG.info("Roundup for year: "+year+", week: "+week);
 
             roundupCommand.execute(year, week);
         };
@@ -64,7 +64,7 @@ public class RoundupApplication {
     @Bean
     RoundupCalculatedEventListener roundupCalculatedEventListener() {
         return roundupCalculatedEvent
-                -> LOG.info("\uD83D\uDCA1 ROUNDUP CALCULATED: "+roundupCalculatedEvent.getRoundup().getMinorUnits());
+                -> LOG.info("\uD83D\uDCA1 ROUNDUP CALCULATED: "+roundupCalculatedEvent.getRoundup());
     }
 
     class HeadersInterceptor implements ClientHttpRequestInterceptor {

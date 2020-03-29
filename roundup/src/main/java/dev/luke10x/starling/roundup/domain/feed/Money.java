@@ -26,4 +26,9 @@ public class Money {
     public Money roundup() {
         return new Money(this.currency, 100 - this.minorUnits % 100);
     }
+
+    public String toString() {
+        // TODO: JPY case
+        return this.currency + String.format(" %.2f", (double) this.minorUnits / 100);
+    }
 }
