@@ -1,6 +1,5 @@
 package dev.luke10x.starling.roundup.backend;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,13 +18,16 @@ public class WeeklyRoundupCollectorTest {
     @Mock TransactionFeedCalculator transactionFeedCalculator;
 
     @Test
-    @Disabled
     void calculatesAmountFromFetchedFeed() {
         TransactionFeed fetchedFeed = new TransactionFeed();
         TransactionFeed anotherFeed = new TransactionFeed();
         when(transactionFeedProvider.fetch(any())).thenReturn(fetchedFeed);
+        WeeklyRoundupCollector weeklyRoundupCollector = new WeeklyRoundupCollector(
+                transactionFeedProvider,
+                transactionFeedCalculator
+        );
 
-        WeeklyRoundupCollector weeklyRoundupCollector = new WeeklyRoundupCollector(transactionFeedCalculator);
+        weeklyRoundupCollector.saveRoundup(2020, 11);
 
         verify(transactionFeedCalculator, never()).calculate(anotherFeed);
         verify(transactionFeedCalculator).calculate(fetchedFeed);
@@ -35,7 +37,10 @@ public class WeeklyRoundupCollectorTest {
     void returnsCalculatedAmount() {
 
         when(transactionFeedCalculator.calculate(any())).thenReturn(new Money("GBP", 1000));
-        WeeklyRoundupCollector weeklyRoundupCollector = new WeeklyRoundupCollector(transactionFeedCalculator);
+        WeeklyRoundupCollector weeklyRoundupCollector = new WeeklyRoundupCollector(
+                transactionFeedProvider,
+                transactionFeedCalculator
+        );
 
         Money roundup = weeklyRoundupCollector.saveRoundup(2020, 11);
 
