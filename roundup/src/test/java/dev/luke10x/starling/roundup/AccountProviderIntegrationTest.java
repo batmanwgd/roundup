@@ -64,4 +64,19 @@ public class AccountProviderIntegrationTest {
 
         assertNotNull(response);
     }
+
+    @Test
+    @Disabled
+    void firstAccountHasAccountUidAndCategoryUid() {
+
+        String starlingHost = "http://localhost:" + starlingAPI.getPort();
+        AccountsProvider accountsProvider = new AccountsProvider(restTemplate, starlingHost);
+
+        AccountsResponse response = accountsProvider.fetch();
+
+        Account first = response.getAccounts().get(0);
+
+        assertEquals("TEST0000-0000-0000-0000-ACCOUNT_UID0", first.getAccountUid());
+        assertEquals("TEST0000-0000-0000-0000-CATEGORY0000", first.getDefaultCategory());
+    }
 }
