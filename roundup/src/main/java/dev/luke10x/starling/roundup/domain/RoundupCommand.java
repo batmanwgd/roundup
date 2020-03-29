@@ -1,7 +1,10 @@
 package dev.luke10x.starling.roundup.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 
+@Component
 public class RoundupCommand {
     private DateResolver dateResolver;
     private AccountRoundupCollector accountRoundupCollector;

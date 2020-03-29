@@ -1,7 +1,11 @@
 package dev.luke10x.starling.roundup;
 
+import dev.luke10x.starling.roundup.domain.RoundupCalculatedEvent;
+import dev.luke10x.starling.roundup.domain.RoundupCalculatedEventListener;
+import dev.luke10x.starling.roundup.domain.RoundupCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +29,9 @@ public class RoundupApplication {
     @Value("${roundup.access_token}")
     private String roundupAccessToken;
 
+    @Value("${roundup.starling_host}")
+    private String starlingHost;
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder
@@ -32,22 +39,33 @@ public class RoundupApplication {
                 .build();
     }
 
+    @Autowired
+    RoundupCommand roundupCommand;
+
     @Profile("!test")
     @Bean
     CommandLineRunner commandLineRunner() {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... args) throws Exception {
-                if (args.length < 2) {
-                    System.err.println("Usage: roundup.jar YEAR WEEK");
-                    System.exit(1);
-                }
-
-                int year = Integer.parseInt(args[0]);
-                int week = Integer.parseInt(args[1]);
-                LOG.info("EXECUTING : command line runner for year: "+year+", week: "+week);
+        return args -> {
+            if (args.length < 2) {
+                System.err.println("Usage: roundup.jar YEAR WEEK");
+                System.exit(1);
             }
+
+            int year = Integer.parseInt(args[0]);
+            int week = Integer.parseInt(args[1]);
+
+            LOG.info("EXECUTING : command line runner for year: "+year+", week: "+week);
+            LOG.info("ROUNDUP_STARLING_HOST: "+starlingHost);
+            LOG.info("ROUNDUP_ACCESS_TOKEN: "+roundupAccessToken);
+
+            roundupCommand.execute(year, week);
         };
+    }
+
+    @Bean
+    RoundupCalculatedEventListener roundupCalculatedEventListener() {
+        return roundupCalculatedEvent
+                -> LOG.info("ROUNDUP CALCULATED: "+roundupCalculatedEvent.getRoundup().getMinorUnits());
     }
 
     class HeadersInterceptor implements ClientHttpRequestInterceptor {

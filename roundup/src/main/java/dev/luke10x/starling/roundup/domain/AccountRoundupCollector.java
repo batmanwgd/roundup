@@ -4,9 +4,11 @@ import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.Money;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class AccountRoundupCollector {
 
     private AccountsProvider accountsProvider;
