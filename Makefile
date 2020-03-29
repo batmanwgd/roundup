@@ -13,7 +13,7 @@ build:
 
 run:
 	docker-compose run --rm roundup \
-		'java -jar /app/target/roundup-0.0.1-SNAPSHOT.jar'
+		'java -jar /app/target/roundup-0.0.1-SNAPSHOT.jar 2020 11'
 
 test:
 	docker-compose run --rm roundup 'mvn test'

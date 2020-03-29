@@ -9,6 +9,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -19,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 
 @SpringBootApplication
-public class RoundupApplication implements CommandLineRunner {
+public class RoundupApplication {
 
     @Value("${roundup.access_token}")
     private String roundupAccessToken;
@@ -29,6 +30,24 @@ public class RoundupApplication implements CommandLineRunner {
         return builder
                 .additionalInterceptors(new HeadersInterceptor(roundupAccessToken))
                 .build();
+    }
+
+    @Profile("!test")
+    @Bean
+    CommandLineRunner commandLineRunner() {
+        return new CommandLineRunner() {
+            @Override
+            public void run(String... args) throws Exception {
+                if (args.length < 2) {
+                    System.err.println("Usage: roundup.jar YEAR WEEK");
+                    System.exit(1);
+                }
+
+                int year = Integer.parseInt(args[0]);
+                int week = Integer.parseInt(args[1]);
+                LOG.info("EXECUTING : command line runner for year: "+year+", week: "+week);
+            }
+        };
     }
 
     class HeadersInterceptor implements ClientHttpRequestInterceptor {
@@ -57,10 +76,5 @@ public class RoundupApplication implements CommandLineRunner {
         SpringApplication app = new SpringApplication(RoundupApplication.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         app.run(args);
-    }
-
-    @Override
-    public void run(String... args) {
-        LOG.info("EXECUTING : command line runner");
     }
 }
