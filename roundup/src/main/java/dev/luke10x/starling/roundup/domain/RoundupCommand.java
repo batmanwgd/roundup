@@ -1,8 +1,5 @@
 package dev.luke10x.starling.roundup.domain;
 
-import dev.luke10x.starling.roundup.domain.AccountRoundupCollector;
-import dev.luke10x.starling.roundup.domain.DateResolver;
-
 import java.time.LocalDate;
 
 public class RoundupCommand {
