@@ -27,7 +27,7 @@ public class WeeklyRoundupCollectorTest {
                 transactionFeedCalculator
         );
 
-        weeklyRoundupCollector.saveRoundup(2020, 11);
+        weeklyRoundupCollector.collectRoundup(2020, 11);
 
         verify(transactionFeedCalculator, never()).calculate(anotherFeed);
         verify(transactionFeedCalculator).calculate(fetchedFeed);
@@ -42,7 +42,7 @@ public class WeeklyRoundupCollectorTest {
                 transactionFeedCalculator
         );
 
-        Money roundup = weeklyRoundupCollector.saveRoundup(2020, 11);
+        Money roundup = weeklyRoundupCollector.collectRoundup(2020, 11);
 
         assertEquals("GBP", roundup.getCurrecy());
         assertEquals(1000, roundup.getMinorUnits());
