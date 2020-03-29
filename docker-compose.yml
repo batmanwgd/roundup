@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  stub:
+    image: node
+    volumes:
+      - './stub:/app'
+    working_dir: '/app'
+    environment:
+      PORT: '3000'
+    entrypoint: '/bin/bash -c'
+    command:
+      - |
+        npm install
+        npm run start:dev
+    networks: [ 'my-network' ]
+
+  roundup:
+    image: maven:3.6-jdk-11-slim
+    volumes:
+      - './roundup:/app'
+    working_dir: '/app'
+    entrypoint: '/bin/bash -c'
+    command:
+      - |
+        tail -f /dev/null
+        mvn spring-boot:run
+    networks: [ 'my-network' ]
+    ports: [ '8080:8080']
+
+networks:
+  my-network:
