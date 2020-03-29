@@ -96,6 +96,26 @@ public class TransactionFeedProviderIntegrationTest {
     }
 
     @Test
+    void fetchesFeedFromHttpForDataRangeWithNoTransations() throws FeedNotFoundException {
+
+        String starlingHost = "http://localhost:" + starlingAPI.getPort();
+
+        TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
+
+        Account account = new Account(
+                "ac82f660-5442-4b78-9038-2b72b1206390",
+                "2eb42e49-f275-4019-8707-81a0637e7206"
+        );
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 9);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 16);
+
+        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
+
+        assertNotNull(feedItems);
+        assertTrue(feedItems.size() == 0);
+    }
+
+    @Test
     void failFetchingFeedForNotExistingAccount() {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
