@@ -1,5 +1,6 @@
 package dev.luke10x.starling.roundup;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,6 +20,16 @@ public class RoundupCommandTest {
 
     @Mock DateResolver dateResolver;
     @Mock AccountRoundupCollector accountRoundupCollector;
+
+    @Test
+    @Disabled   
+    void resolvesDateFromPassedYearAndWeek() {
+        RoundupCommand roundupCommand = new RoundupCommand(dateResolver, accountRoundupCollector);
+
+        roundupCommand.execute(2020, 22);
+
+        verify(dateResolver).resolve(2020, 22 );
+    }
 
     @Test
     void collectsRoundupStartingWithResolvedDate() {
