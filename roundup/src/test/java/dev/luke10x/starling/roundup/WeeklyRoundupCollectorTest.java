@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.Month;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -26,8 +30,9 @@ public class WeeklyRoundupCollectorTest {
                 transactionFeedProvider,
                 transactionFeedCalculator
         );
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
 
-        weeklyRoundupCollector.collectRoundup(2020, 11);
+        weeklyRoundupCollector.collectRoundup(from);
 
         verify(transactionFeedCalculator, never()).calculate(anotherFeed);
         verify(transactionFeedCalculator).calculate(fetchedFeed);
@@ -41,8 +46,9 @@ public class WeeklyRoundupCollectorTest {
                 transactionFeedProvider,
                 transactionFeedCalculator
         );
-
-        Money roundup = weeklyRoundupCollector.collectRoundup(2020, 11);
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
+        
+        Money roundup = weeklyRoundupCollector.collectRoundup(from);
 
         assertEquals("GBP", roundup.getCurrecy());
         assertEquals(1000, roundup.getMinorUnits());

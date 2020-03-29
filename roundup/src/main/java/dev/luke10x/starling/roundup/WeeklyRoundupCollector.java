@@ -19,7 +19,7 @@ public class WeeklyRoundupCollector {
         this.transactionFeedCalculator = transactionFeedCalculator;
     }
 
-    public Money collectRoundup(int year, int weekOfTheYear) {
+    public Money collectRoundup(LocalDate from) {
         final long calendarWeek = 11;
         LocalDate desiredDate = LocalDate.of(2020, 1, 1)
                 .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, calendarWeek)
