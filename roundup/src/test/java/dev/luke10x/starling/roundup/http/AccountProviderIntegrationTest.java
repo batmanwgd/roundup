@@ -11,8 +11,8 @@ import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith({MockitoExtension.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = { RoundupApplication.class })
-@EnableConfigurationProperties
+@TestPropertySource(locations="classpath:test.properties")
 public class AccountProviderIntegrationTest {
 
     static private ClientAndServer starlingAPI;
@@ -64,7 +64,7 @@ public class AccountProviderIntegrationTest {
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
         AccountsProvider accountsProvider = new HttpAccountsProvider(restTemplate, starlingHost);
 
-         AccountsResponse response = accountsProvider.fetch();
+        AccountsResponse response = accountsProvider.fetch();
 
         assertNotNull(response);
     }

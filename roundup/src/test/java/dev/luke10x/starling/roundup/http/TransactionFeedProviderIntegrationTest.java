@@ -15,6 +15,7 @@ import org.mockserver.model.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -31,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = { RoundupApplication.class })
 @EnableConfigurationProperties
+@TestPropertySource(locations="classpath:test.properties")
 public class TransactionFeedProviderIntegrationTest {
 
     static private ClientAndServer starlingAPI;
