@@ -1,5 +1,6 @@
 package dev.luke10x.starling.roundup;
 
+import dev.luke10x.starling.roundup.accounts.Account;
 import dev.luke10x.starling.roundup.accounts.AccountsResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({MockitoExtension.class})
@@ -53,7 +55,6 @@ public class AccountProviderIntegrationTest {
     RestTemplate restTemplate;
 
     @Test
-    @Disabled
     void fetchesAccountsResponseFromHttpApi() {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();

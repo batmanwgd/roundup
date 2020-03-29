@@ -14,6 +14,8 @@ public class AccountsProvider {
     }
 
     public AccountsResponse fetch() {
-        return null;
+        String url = starlingHost + "/api/v2/accounts";
+
+        return restTemplate.getForObject(url, AccountsResponse.class );
     }
 }
