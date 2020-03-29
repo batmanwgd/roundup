@@ -110,5 +110,9 @@ public class AccountRoundupCollectorTest {
         verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
                 event -> event.getFrom().equals(from)
         ));
+
+        verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
+                event -> event.getAccount().equals(account)
+        ));
     }
 }
