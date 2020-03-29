@@ -1,6 +1,7 @@
 package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.accounts.Account;
+import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.Money;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 
@@ -23,7 +24,12 @@ public class AccountRoundupCollector {
 
     public Money collectRoundup(LocalDate from) {
         Account account = accountsProvider.fetch().getAccounts().get(0);
-        TransactionFeed feed = transactionFeedProvider.fetch(account, from);
+        TransactionFeed feed = null;
+        try {
+            feed = transactionFeedProvider.fetch(account, from);
+        } catch (FeedNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         return transactionFeedCalculator.calculate(feed);
     }
 }

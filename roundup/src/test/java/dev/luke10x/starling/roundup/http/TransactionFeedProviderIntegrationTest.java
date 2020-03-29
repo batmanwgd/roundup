@@ -65,7 +65,7 @@ public class TransactionFeedProviderIntegrationTest {
     RestTemplate restTemplate;
 
     @Test
-    void fetchesFeedFromHttp() throws IOException {
+    void fetchesFeedFromHttp() throws IOException, FeedNotFoundException {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 

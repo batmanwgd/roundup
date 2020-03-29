@@ -2,7 +2,9 @@ package dev.luke10x.starling.roundup.http;
 
 import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
+import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -17,13 +19,16 @@ public class HttpTransactionFeedProvider implements TransactionFeedProvider {
         this.starlingHost = starlingHost;
     }
 
-    @Override public TransactionFeed fetch(Account account, LocalDate from) {
+    @Override public TransactionFeed fetch(Account account, LocalDate from) throws FeedNotFoundException {
 
-        // TODO actually make call to accounts endpoint to obtain account ID and category ID
-        String url = starlingHost +
-        "/api/v2/feed/account/ac82f660-5442-4b78-9038-2b72b1206390/category/" +
-                "2eb42e49-f275-4019-8707-81a0637e7206";
+        String url = starlingHost
+                + "/api/v2/feed/account/" + account.getAccountUid()
+                + "/category/" + account.getDefaultCategory();
 
-        return restTemplate.getForObject(url, TransactionFeed.class );
+        try {
+            return restTemplate.getForObject(url, TransactionFeed.class );
+        } catch (HttpClientErrorException ex) {
+            throw new FeedNotFoundException();
+        }
     }
 }

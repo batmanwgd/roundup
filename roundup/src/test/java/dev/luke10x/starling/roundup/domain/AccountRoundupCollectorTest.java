@@ -2,6 +2,7 @@ package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.accounts.AccountsResponse;
+import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.Money;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ public class AccountRoundupCollectorTest {
     AccountsProvider accountsProvider;
 
     @Test
-    void fetchesFeedByItsStartingDateUsingProvidedAccount() {
+    void fetchesFeedByItsStartingDateUsingProvidedAccount() throws FeedNotFoundException {
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
                 "2eb42e49-f275-4019-8707-81a0637e7206"
@@ -59,7 +60,7 @@ public class AccountRoundupCollectorTest {
     }
 
     @Test
-    void calculatesAmountFromFetchedFeed() {
+    void calculatesAmountFromFetchedFeed() throws FeedNotFoundException {
 
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
