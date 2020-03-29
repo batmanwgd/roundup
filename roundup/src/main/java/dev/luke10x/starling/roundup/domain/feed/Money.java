@@ -24,6 +24,6 @@ public class Money {
     }
 
     public Money roundup() {
-        return null;
+        return new Money(this.currency, 100 - this.minorUnits % 100);
     }
 }
