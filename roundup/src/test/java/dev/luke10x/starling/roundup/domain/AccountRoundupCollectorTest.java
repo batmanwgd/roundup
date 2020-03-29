@@ -2,6 +2,7 @@ package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.accounts.AccountsResponse;
+import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.Money;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
@@ -12,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -71,9 +72,10 @@ public class AccountRoundupCollectorTest {
         AccountsResponse accountsResponse = buildAccountsResponse(account);
         when(accountsProvider.fetch()).thenReturn(accountsResponse);
 
-        TransactionFeed fetchedFeed = new TransactionFeed();
-        TransactionFeed anotherFeed = new TransactionFeed();
-        when(transactionFeedProvider.fetch(any(), any())).thenReturn(fetchedFeed);
+        List<FeedItem> fetchedFeedItems = List.of(new FeedItem());
+        List<FeedItem> anotherFeedItems = List.of(new FeedItem());
+
+        when(transactionFeedProvider.fetch(any(), any())).thenReturn(fetchedFeedItems);
 
         AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
                 accountsProvider, transactionFeedProvider,
@@ -83,8 +85,8 @@ public class AccountRoundupCollectorTest {
 
         accountRoundupCollector.collectRoundup(from);
 
-        verify(transactionFeedCalculator, never()).calculate(anotherFeed);
-        verify(transactionFeedCalculator).calculate(fetchedFeed);
+        verify(transactionFeedCalculator, never()).calculate(anotherFeedItems);
+        verify(transactionFeedCalculator).calculate(fetchedFeedItems);
     }
 
     @Test

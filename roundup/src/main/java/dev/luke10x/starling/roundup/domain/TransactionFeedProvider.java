@@ -1,11 +1,12 @@
 package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.accounts.Account;
+import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface TransactionFeedProvider {
-    TransactionFeed fetch(Account account, LocalDate from) throws FeedNotFoundException;
+    List<FeedItem> fetch(Account account, LocalDate from) throws FeedNotFoundException;
 }

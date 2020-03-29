@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({MockitoExtension.class})
@@ -17,21 +20,21 @@ public class TransactionFeedCalculatorTest {
 
         TransactionFeedCalculator transactionFeedCalculator = new TransactionFeedCalculator();
 
-        TransactionFeed feed = new TransactionFeed();
-        feed.getFeedItems().add(new FeedItem(
+        List<FeedItem> feedItems = new LinkedList<>();
+        feedItems.add(new FeedItem(
                 "OUT",
                 new Money("GBP", 435)
         ));
-        feed.getFeedItems().add(new FeedItem(
+        feedItems.add(new FeedItem(
                 "OUT",
                 new Money("GBP", 520)
         ));
-        feed.getFeedItems().add(new FeedItem(
+        feedItems.add(new FeedItem(
                 "OUT",
                 new Money("GBP", 87)
         ));
 
-        Money roundup = transactionFeedCalculator.calculate(feed);
+        Money roundup = transactionFeedCalculator.calculate(feedItems);
 
         assertEquals("GBP", roundup.getCurrency());
         assertEquals(158, roundup.getMinorUnits());

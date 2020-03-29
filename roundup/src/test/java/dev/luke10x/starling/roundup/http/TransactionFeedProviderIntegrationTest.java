@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -81,12 +82,12 @@ public class TransactionFeedProviderIntegrationTest {
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
 
-        TransactionFeed feed = transactionFeedProvider.fetch(account, from);
+        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from);
 
-        assertNotNull(feed);
-        assertTrue(feed.getFeedItems().size() > 0);
+        assertNotNull(feedItems);
+        assertTrue(feedItems.size() > 0);
 
-        FeedItem first = feed.getFeedItems().get(0);
+        FeedItem first = feedItems.get(0);
         assertEquals("OUT", first.getDirection());
         assertEquals(3909, first.getAmount().getMinorUnits());
         assertEquals("GBP", first.getAmount().getCurrency());

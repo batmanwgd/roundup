@@ -1,13 +1,15 @@
 package dev.luke10x.starling.roundup.domain;
 
+import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.Money;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class TransactionFeedCalculator {
-    public Money calculate(TransactionFeed feed) {
-        Money feedRoundup = feed.getFeedItems().stream()
+    public Money calculate(List<FeedItem> feedItems) {
+        Money feedRoundup = feedItems.stream()
                 .map(item -> item.getAmount())
                 .reduce(
                         new Money("GBP", 0),
