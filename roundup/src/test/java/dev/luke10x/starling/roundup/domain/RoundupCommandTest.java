@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,9 +32,12 @@ public class RoundupCommandTest {
     @Test
     void collectsRoundupStartingWithResolvedDate() {
         LocalDate resolvedFromDate = LocalDate.of(2004, Month.MARCH, 2);
-        LocalDate resolvedToDate = LocalDate.of(2004, Month.MARCH, 2);
+        LocalDate resolvedToDate = LocalDate.of(2004, Month.MARCH, 9);
         LocalDate anotherDate = LocalDate.of(2005, Month.DECEMBER, 3);
-        when(dateResolver.resolve(anyInt(), anyInt())).thenReturn(resolvedFromDate);
+
+        when(dateResolver.resolve(2020, 11)).thenReturn(resolvedFromDate);
+        when(dateResolver.resolve(2020, 12)).thenReturn(resolvedToDate);
+
         RoundupCommand roundupCommand = new RoundupCommand(dateResolver, accountRoundupCollector);
 
         roundupCommand.execute(2020, 11);
