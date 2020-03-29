@@ -1,5 +1,7 @@
 package dev.luke10x.starling.roundup;
 
+import java.time.LocalDate;
+
 public class RoundupCommand {
     private DateResolver dateResolver;
     private AccountRoundupCollector accountRoundupCollector;
@@ -13,5 +15,7 @@ public class RoundupCommand {
     }
 
     public void execute(int year, int weekOfTheYear) {
+        LocalDate from = dateResolver.resolve(1001, 3);
+        accountRoundupCollector.collectRoundup(from);
     }
 }
