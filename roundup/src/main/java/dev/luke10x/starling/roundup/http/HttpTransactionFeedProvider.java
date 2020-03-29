@@ -1,6 +1,5 @@
 package dev.luke10x.starling.roundup.http;
 
-import dev.luke10x.starling.roundup.RoundupApplication;
 import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
@@ -14,8 +13,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class HttpTransactionFeedProvider implements TransactionFeedProvider {
@@ -44,7 +45,14 @@ public class HttpTransactionFeedProvider implements TransactionFeedProvider {
         try {
             return Objects.requireNonNull(restTemplate
                     .getForObject(url, TransactionFeed.class))
-                    .getFeedItems();
+                    .getFeedItems()
+                    .stream()
+                    .filter(
+                        item
+                                -> item.getTransactionTime().isAfter(from.atStartOfDay(ZoneId.of("UTC")))
+                                && item.getTransactionTime().isBefore(to.atStartOfDay(ZoneId.of("UTC")))
+                    )
+                    .collect(Collectors.toList());
         } catch (HttpClientErrorException ex) {
             throw new FeedNotFoundException();
         }
