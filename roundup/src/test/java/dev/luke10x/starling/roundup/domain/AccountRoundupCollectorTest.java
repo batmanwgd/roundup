@@ -96,7 +96,8 @@ public class AccountRoundupCollectorTest {
         AccountsResponse accountsResponse = buildAccountsResponse(account);
         when(accountsProvider.fetch()).thenReturn(accountsResponse);
 
-        when(transactionFeedCalculator.calculate(any())).thenReturn(new Money("GBP", 1000));
+        Money roundup = new Money("GBP", 1000);
+        when(transactionFeedCalculator.calculate(any())).thenReturn(roundup);
         AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
                 accountsProvider,
                 transactionFeedProvider,
@@ -113,6 +114,10 @@ public class AccountRoundupCollectorTest {
 
         verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
                 event -> event.getAccount().equals(account)
+        ));
+
+        verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
+                event -> event.getRoundup().equals(roundup)
         ));
     }
 }

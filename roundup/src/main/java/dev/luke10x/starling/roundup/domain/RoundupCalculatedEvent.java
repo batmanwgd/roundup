@@ -1,6 +1,7 @@
 package dev.luke10x.starling.roundup.domain;
 
 import dev.luke10x.starling.roundup.domain.accounts.Account;
+import dev.luke10x.starling.roundup.domain.feed.Money;
 
 import java.time.LocalDate;
 
@@ -19,5 +20,9 @@ public class RoundupCalculatedEvent {
 
     public Account getAccount() {
         return account;
+    }
+
+    public Money getRoundup() {
+        return null;
     }
 }
