@@ -24,7 +24,7 @@ public class AccountRoundupCollector {
                 .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, calendarWeek)
                 .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        TransactionFeed feed = transactionFeedProvider.fetch(desiredDate);
+        TransactionFeed feed = transactionFeedProvider.fetch(from);
         return transactionFeedCalculator.calculate(feed);
     }
 }
