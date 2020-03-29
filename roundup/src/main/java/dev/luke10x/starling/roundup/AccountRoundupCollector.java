@@ -1,5 +1,8 @@
 package dev.luke10x.starling.roundup;
 
+import dev.luke10x.starling.roundup.feed.Money;
+import dev.luke10x.starling.roundup.feed.TransactionFeed;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.IsoFields;

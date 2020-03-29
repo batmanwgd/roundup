@@ -1,5 +1,7 @@
 package dev.luke10x.starling.roundup;
 
+import dev.luke10x.starling.roundup.feed.FeedItem;
+import dev.luke10x.starling.roundup.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
