@@ -6,6 +6,7 @@ public class FeedItem {
 
     private String direction;
     private Money amount;
+    private ZonedDateTime transactionTime;
 
     public FeedItem() {}
 
@@ -24,6 +25,6 @@ public class FeedItem {
     }
 
     public ZonedDateTime getTransactionTime() {
-        return null;
+        return transactionTime;
     }
 }
