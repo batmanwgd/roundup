@@ -19,8 +19,7 @@ public class Money {
         return minorUnits;
     }
 
-    public Money add(Money money2) {
-        return null;
+    public Money add(Money another) {
+        return new Money(this.currency, this.minorUnits + another.minorUnits);
     }
-
 }
