@@ -7,6 +7,11 @@ public class AccountsResponse {
 
     public AccountsResponse() {}
 
+    public <T> AccountsResponse(List<Account> accounts) {
+
+        this.accounts = accounts;
+    }
+
     public List<Account> getAccounts() {
         return accounts;
     }

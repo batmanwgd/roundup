@@ -2,6 +2,7 @@ package dev.luke10x.starling.roundup.http;
 
 import dev.luke10x.starling.roundup.RoundupApplication;
 import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
@@ -68,8 +69,13 @@ public class TransactionFeedProviderIntegrationTest {
 
         TransactionFeedProvider transactionFeedProvider = new HttpTransactionFeedProvider(restTemplate, starlingHost);
 
-        TransactionFeed feed = transactionFeedProvider
-                .fetch(LocalDate.of(2020, Month.MARCH, 20));
+        Account account = new Account(
+                "ac82f660-5442-4b78-9038-2b72b1206390",
+                "2eb42e49-f275-4019-8707-81a0637e7206"
+        );
+        LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+
+        TransactionFeed feed = transactionFeedProvider.fetch(account, from);
 
         assertNotNull(feed);
         assertTrue(feed.getFeedItems().size() > 0);

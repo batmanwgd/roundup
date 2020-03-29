@@ -1,6 +1,7 @@
 package dev.luke10x.starling.roundup.http;
 
 import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,7 +17,7 @@ public class HttpTransactionFeedProvider implements TransactionFeedProvider {
         this.starlingHost = starlingHost;
     }
 
-    @Override public TransactionFeed fetch(LocalDate from) {
+    @Override public TransactionFeed fetch(Account account, LocalDate from) {
 
         // TODO actually make call to accounts endpoint to obtain account ID and category ID
         String url = starlingHost +

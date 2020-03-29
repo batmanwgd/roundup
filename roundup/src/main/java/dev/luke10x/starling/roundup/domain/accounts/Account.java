@@ -6,6 +6,11 @@ public class Account {
 
     public Account() {}
 
+    public Account(String accountUid, String defaultCategory) {
+        this.accountUid = accountUid;
+        this.defaultCategory = defaultCategory;
+    }
+
     public String getAccountUid() {
         return accountUid;
     }
