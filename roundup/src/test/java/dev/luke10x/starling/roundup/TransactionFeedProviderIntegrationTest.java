@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.Month;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({MockitoExtension.class})
@@ -66,5 +67,6 @@ public class TransactionFeedProviderIntegrationTest {
                 .fetch(LocalDate.of(2020, Month.MARCH, 20));
 
         assertNotNull(feed);
+        assertTrue(feed.getFeedItems().size() > 0);
     }
 }
