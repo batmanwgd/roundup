@@ -16,7 +16,6 @@ services:
     networks: [ 'my-network' ]
     ports: [ '3000:3000']
 
-
   roundup:
     image: maven:3.6-jdk-11-slim
     volumes:
@@ -24,18 +23,13 @@ services:
       - 'maven-cache:/root/.m2'
     working_dir: '/app'
     environment:
-      # STARLING_HOST: https://api-sandbox.starlingbank.com
       STARLING_HOST: http://stub:3000
       ROUNDUP_ACCESS_TOKEN: ${ROUNDUP_ACCESS_TOKEN:-My-Roundup-Access-Token}
     entrypoint: '/bin/bash -c'
-    command:
-      - |
-        tail -f /dev/null
-        mvn spring-boot:run
     networks: [ 'my-network' ]
-    ports: [ '8080:8080']
 
 networks:
   my-network:
+
 volumes:
   maven-cache:
