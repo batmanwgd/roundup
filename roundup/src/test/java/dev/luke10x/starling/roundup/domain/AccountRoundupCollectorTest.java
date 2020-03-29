@@ -12,11 +12,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,6 +32,9 @@ public class AccountRoundupCollectorTest {
     @Mock
     AccountsProvider accountsProvider;
 
+    @Mock
+    RoundupCalculatedEventListener roundupCalculatedEventListener;
+
     @Test
     void fetchesFeedByItsStartingDateUsingProvidedAccount() throws FeedNotFoundException {
         Account account = new Account(
@@ -46,8 +48,8 @@ public class AccountRoundupCollectorTest {
         AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
                 accountsProvider,
                 transactionFeedProvider,
-                transactionFeedCalculator
-        );
+                transactionFeedCalculator,
+                roundupCalculatedEventListener);
 
         accountRoundupCollector.collectRoundup(startingDate);
 
@@ -75,8 +77,8 @@ public class AccountRoundupCollectorTest {
 
         AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
                 accountsProvider, transactionFeedProvider,
-                transactionFeedCalculator
-        );
+                transactionFeedCalculator,
+                roundupCalculatedEventListener);
         LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
 
         accountRoundupCollector.collectRoundup(from);
@@ -86,7 +88,7 @@ public class AccountRoundupCollectorTest {
     }
 
     @Test
-    void returnsCalculatedAmount() {
+    void dispatchesEventWithCalculatedAmount() {
         Account account = new Account(
                 "ac82f660-5442-4b78-9038-2b72b1206390",
                 "2eb42e49-f275-4019-8707-81a0637e7206"
@@ -98,13 +100,15 @@ public class AccountRoundupCollectorTest {
         AccountRoundupCollector accountRoundupCollector = new AccountRoundupCollector(
                 accountsProvider,
                 transactionFeedProvider,
-                transactionFeedCalculator
+                transactionFeedCalculator,
+                roundupCalculatedEventListener
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 15);
 
-        Money roundup = accountRoundupCollector.collectRoundup(from);
+        accountRoundupCollector.collectRoundup(from);
 
-        assertEquals("GBP", roundup.getCurrency());
-        assertEquals(1000, roundup.getMinorUnits());
+        verify(roundupCalculatedEventListener).onRoundupCalculated(argThat(
+                event -> event.getFrom().equals(from)
+        ));
     }
 }

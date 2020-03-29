@@ -15,8 +15,8 @@ public class AccountRoundupCollector {
     
     public AccountRoundupCollector(
             AccountsProvider accountsProvider, TransactionFeedProvider transactionFeedProvider,
-            TransactionFeedCalculator transactionFeedCalculator
-    ) {
+            TransactionFeedCalculator transactionFeedCalculator,
+            RoundupCalculatedEventListener roundupCalculatedEventListener) {
         this.accountsProvider = accountsProvider;
         this.transactionFeedProvider = transactionFeedProvider;
         this.transactionFeedCalculator = transactionFeedCalculator;
