@@ -1,4 +1,4 @@
-package dev.luke10x.starling.roundup.accounts;
+package dev.luke10x.starling.roundup.domain.accounts;
 
 public class Account {
     private String accountUid;

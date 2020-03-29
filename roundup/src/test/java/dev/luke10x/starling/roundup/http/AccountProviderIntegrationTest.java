@@ -1,9 +1,9 @@
 package dev.luke10x.starling.roundup.http;
 
-import dev.luke10x.starling.roundup.AccountsProvider;
+import dev.luke10x.starling.roundup.domain.AccountsProvider;
 import dev.luke10x.starling.roundup.RoundupApplication;
-import dev.luke10x.starling.roundup.accounts.Account;
-import dev.luke10x.starling.roundup.accounts.AccountsResponse;
+import dev.luke10x.starling.roundup.domain.accounts.Account;
+import dev.luke10x.starling.roundup.domain.accounts.AccountsResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

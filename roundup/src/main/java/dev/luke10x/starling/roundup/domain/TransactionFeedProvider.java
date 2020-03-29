@@ -1,6 +1,6 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.domain;
 
-import dev.luke10x.starling.roundup.feed.TransactionFeed;
+import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 
 import java.time.LocalDate;
 

@@ -1,5 +1,8 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.domain;
 
+import dev.luke10x.starling.roundup.domain.AccountRoundupCollector;
+import dev.luke10x.starling.roundup.domain.DateResolver;
+import dev.luke10x.starling.roundup.domain.RoundupCommand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,8 +19,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith({MockitoExtension.class})
 public class RoundupCommandTest {
 
-    @Mock DateResolver dateResolver;
-    @Mock AccountRoundupCollector accountRoundupCollector;
+    @Mock
+    DateResolver dateResolver;
+    @Mock
+    AccountRoundupCollector accountRoundupCollector;
 
     @Test
     void resolvesDateFromPassedYearAndWeek() {

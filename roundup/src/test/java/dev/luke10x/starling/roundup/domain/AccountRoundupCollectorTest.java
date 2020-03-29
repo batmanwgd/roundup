@@ -1,7 +1,10 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.domain;
 
-import dev.luke10x.starling.roundup.feed.Money;
-import dev.luke10x.starling.roundup.feed.TransactionFeed;
+import dev.luke10x.starling.roundup.domain.AccountRoundupCollector;
+import dev.luke10x.starling.roundup.domain.TransactionFeedCalculator;
+import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.feed.Money;
+import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,9 +22,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith({MockitoExtension.class})
 public class AccountRoundupCollectorTest {
 
-    @Mock TransactionFeedProvider transactionFeedProvider;
+    @Mock
+    TransactionFeedProvider transactionFeedProvider;
 
-    @Mock TransactionFeedCalculator transactionFeedCalculator;
+    @Mock
+    TransactionFeedCalculator transactionFeedCalculator;
 
     @Test
     void fetchesFeedByItsStartingDate() {

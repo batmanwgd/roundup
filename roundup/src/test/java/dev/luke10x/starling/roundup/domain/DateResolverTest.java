@@ -1,5 +1,6 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.domain;
 
+import dev.luke10x.starling.roundup.domain.DateResolver;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

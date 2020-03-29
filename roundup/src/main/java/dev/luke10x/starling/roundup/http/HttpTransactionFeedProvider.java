@@ -1,7 +1,7 @@
 package dev.luke10x.starling.roundup.http;
 
-import dev.luke10x.starling.roundup.TransactionFeedProvider;
-import dev.luke10x.starling.roundup.feed.TransactionFeed;
+import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;

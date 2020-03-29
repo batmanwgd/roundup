@@ -1,7 +1,6 @@
-package dev.luke10x.starling.roundup.feed;
+package dev.luke10x.starling.roundup.domain.feed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import dev.luke10x.starling.roundup.feed.FeedItem;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dev.luke10x.starling.roundup;
+package dev.luke10x.starling.roundup.domain;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

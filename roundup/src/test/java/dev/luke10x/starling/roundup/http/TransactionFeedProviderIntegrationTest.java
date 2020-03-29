@@ -1,9 +1,9 @@
 package dev.luke10x.starling.roundup.http;
 
 import dev.luke10x.starling.roundup.RoundupApplication;
-import dev.luke10x.starling.roundup.TransactionFeedProvider;
-import dev.luke10x.starling.roundup.feed.FeedItem;
-import dev.luke10x.starling.roundup.feed.TransactionFeed;
+import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
+import dev.luke10x.starling.roundup.domain.feed.FeedItem;
+import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
