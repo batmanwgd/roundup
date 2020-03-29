@@ -19,6 +19,7 @@ services:
     image: maven:3.6-jdk-11-slim
     volumes:
       - './roundup:/app'
+      - 'maven-cache:/root/.m2'
     working_dir: '/app'
     entrypoint: '/bin/bash -c'
     environment:
@@ -33,3 +34,5 @@ services:
 
 networks:
   my-network:
+volumes:
+  maven-cache:
