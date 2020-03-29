@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class HttpTransactionFeedProvider implements TransactionFeedProvider {
@@ -27,15 +28,15 @@ public class HttpTransactionFeedProvider implements TransactionFeedProvider {
         this.starlingHost = starlingHost;
     }
 
-    @Override public List<FeedItem> fetch(Account account, LocalDate from) throws FeedNotFoundException {
+    @Override public List<FeedItem> fetch(Account account, LocalDate from, LocalDate to) throws FeedNotFoundException {
 
         String url = starlingHost
                 + "/api/v2/feed/account/" + account.getAccountUid()
                 + "/category/" + account.getDefaultCategory();
 
         try {
-            return restTemplate
-                    .getForObject(url, TransactionFeed.class)
+            return Objects.requireNonNull(restTemplate
+                    .getForObject(url, TransactionFeed.class))
                     .getFeedItems();
         } catch (HttpClientErrorException ex) {
             throw new FeedNotFoundException();

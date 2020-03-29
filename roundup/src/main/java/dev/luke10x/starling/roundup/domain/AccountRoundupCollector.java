@@ -4,7 +4,6 @@ import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
 import dev.luke10x.starling.roundup.domain.feed.Money;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -28,10 +27,10 @@ public class AccountRoundupCollector {
         this.roundupCalculatedEventListener = roundupCalculatedEventListener;
     }
 
-    public void collectRoundup(LocalDate from) {
+    public void collectRoundup(LocalDate from, LocalDate to) {
         Account account = accountsProvider.fetch().getAccounts().get(0);
         try {
-            List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from);
+            List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
             Money roundup = transactionFeedCalculator.calculate(feedItems);
 
             RoundupCalculatedEvent event = new RoundupCalculatedEvent(from, account, roundup);

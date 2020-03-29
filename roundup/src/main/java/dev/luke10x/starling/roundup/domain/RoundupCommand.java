@@ -19,6 +19,6 @@ public class RoundupCommand {
 
     public void execute(int year, int weekOfTheYear) {
         LocalDate from = dateResolver.resolve(year, weekOfTheYear);
-        accountRoundupCollector.collectRoundup(from);
+        accountRoundupCollector.collectRoundup(from, from);
     }
 }

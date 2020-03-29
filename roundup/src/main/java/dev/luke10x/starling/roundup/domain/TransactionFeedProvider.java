@@ -8,5 +8,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionFeedProvider {
-    List<FeedItem> fetch(Account account, LocalDate from) throws FeedNotFoundException;
+    List<FeedItem> fetch(Account account, LocalDate from, LocalDate to) throws FeedNotFoundException;
 }

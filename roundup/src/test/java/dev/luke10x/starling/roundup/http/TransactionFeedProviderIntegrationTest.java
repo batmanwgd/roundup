@@ -5,7 +5,6 @@ import dev.luke10x.starling.roundup.domain.TransactionFeedProvider;
 import dev.luke10x.starling.roundup.domain.accounts.Account;
 import dev.luke10x.starling.roundup.domain.feed.FeedItem;
 import dev.luke10x.starling.roundup.domain.feed.FeedNotFoundException;
-import dev.luke10x.starling.roundup.domain.feed.TransactionFeed;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -81,8 +80,9 @@ public class TransactionFeedProviderIntegrationTest {
                 "2eb42e49-f275-4019-8707-81a0637e7206"
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
 
-        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from);
+        List<FeedItem> feedItems = transactionFeedProvider.fetch(account, from, to);
 
         assertNotNull(feedItems);
         assertTrue(feedItems.size() > 0);
@@ -105,9 +105,10 @@ public class TransactionFeedProviderIntegrationTest {
                 "2eb42e49-f275-4019-8707-81a0637e7206"
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            transactionFeedProvider.fetch(account, from);
+            transactionFeedProvider.fetch(account, from, to);
         });
 
         assertThat(exception, instanceOf(FeedNotFoundException.class));
@@ -125,9 +126,10 @@ public class TransactionFeedProviderIntegrationTest {
                 "badDefaultCategory"
         );
         LocalDate from = LocalDate.of(2020, Month.MARCH, 20);
+        LocalDate to = LocalDate.of(2020, Month.MARCH, 20);
 
         Exception exception = assertThrows(Exception.class, () -> {
-            transactionFeedProvider.fetch(account, from);
+            transactionFeedProvider.fetch(account, from, to);
         });
 
         assertThat(exception, instanceOf(FeedNotFoundException.class));

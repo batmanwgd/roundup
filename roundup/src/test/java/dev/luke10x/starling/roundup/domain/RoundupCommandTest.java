@@ -1,8 +1,5 @@
 package dev.luke10x.starling.roundup.domain;
 
-import dev.luke10x.starling.roundup.domain.AccountRoundupCollector;
-import dev.luke10x.starling.roundup.domain.DateResolver;
-import dev.luke10x.starling.roundup.domain.RoundupCommand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -35,14 +32,15 @@ public class RoundupCommandTest {
 
     @Test
     void collectsRoundupStartingWithResolvedDate() {
-        LocalDate resolvedDate = LocalDate.of(2004, Month.MARCH, 2);
+        LocalDate resolvedFromDate = LocalDate.of(2004, Month.MARCH, 2);
+        LocalDate resolvedToDate = LocalDate.of(2004, Month.MARCH, 2);
         LocalDate anotherDate = LocalDate.of(2005, Month.DECEMBER, 3);
-        when(dateResolver.resolve(anyInt(), anyInt())).thenReturn(resolvedDate);
+        when(dateResolver.resolve(anyInt(), anyInt())).thenReturn(resolvedFromDate);
         RoundupCommand roundupCommand = new RoundupCommand(dateResolver, accountRoundupCollector);
 
         roundupCommand.execute(2020, 11);
 
-        verify(accountRoundupCollector, never()).collectRoundup(anotherDate);
-        verify(accountRoundupCollector).collectRoundup(resolvedDate);
+        verify(accountRoundupCollector, never()).collectRoundup(anotherDate, resolvedToDate);
+        verify(accountRoundupCollector).collectRoundup(resolvedFromDate, resolvedToDate);
     }
 }
