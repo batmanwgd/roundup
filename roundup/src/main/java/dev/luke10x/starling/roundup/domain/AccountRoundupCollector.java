@@ -12,7 +12,8 @@ public class AccountRoundupCollector {
     private AccountsProvider accountsProvider;
     private final TransactionFeedProvider transactionFeedProvider;
     private final TransactionFeedCalculator transactionFeedCalculator;
-    
+    private RoundupCalculatedEventListener roundupCalculatedEventListener;
+
     public AccountRoundupCollector(
             AccountsProvider accountsProvider, TransactionFeedProvider transactionFeedProvider,
             TransactionFeedCalculator transactionFeedCalculator,
@@ -20,16 +21,19 @@ public class AccountRoundupCollector {
         this.accountsProvider = accountsProvider;
         this.transactionFeedProvider = transactionFeedProvider;
         this.transactionFeedCalculator = transactionFeedCalculator;
+        this.roundupCalculatedEventListener = roundupCalculatedEventListener;
     }
 
-    public Money collectRoundup(LocalDate from) {
+    public void collectRoundup(LocalDate from) {
         Account account = accountsProvider.fetch().getAccounts().get(0);
-        TransactionFeed feed = null;
         try {
-            feed = transactionFeedProvider.fetch(account, from);
+            TransactionFeed feed = transactionFeedProvider.fetch(account, from);
+            transactionFeedCalculator.calculate(feed);
+
+            RoundupCalculatedEvent event = new RoundupCalculatedEvent(from);
+            roundupCalculatedEventListener.onRoundupCalculated(event);
         } catch (FeedNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return transactionFeedCalculator.calculate(feed);
     }
 }
