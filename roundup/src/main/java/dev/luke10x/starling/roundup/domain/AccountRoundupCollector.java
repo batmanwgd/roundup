@@ -30,7 +30,7 @@ public class AccountRoundupCollector {
             TransactionFeed feed = transactionFeedProvider.fetch(account, from);
             transactionFeedCalculator.calculate(feed);
 
-            RoundupCalculatedEvent event = new RoundupCalculatedEvent(from);
+            RoundupCalculatedEvent event = new RoundupCalculatedEvent(from, account);
             roundupCalculatedEventListener.onRoundupCalculated(event);
         } catch (FeedNotFoundException e) {
             throw new RuntimeException(e);
