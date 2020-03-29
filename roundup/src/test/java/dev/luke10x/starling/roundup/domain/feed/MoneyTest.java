@@ -19,4 +19,24 @@ public class MoneyTest {
         assertEquals(333, money3.getMinorUnits());
         assertEquals("GBP", money3.getCurrency());
     }
+
+    @Test
+    void calculatesRoundupOfSingleMoneySmallValue() {
+        Money money = new Money("GBP", 2);
+
+        Money roundup = money.roundup();
+
+        assertEquals(98, roundup.getMinorUnits());
+        assertEquals("GBP", roundup.getCurrency());
+    }
+
+    @Test
+    void calculatesRoundupOfSingleMoney() {
+        Money money = new Money("GBP", 777);
+
+        Money roundup = money.roundup();
+
+        assertEquals(23, roundup.getMinorUnits());
+        assertEquals("GBP", roundup.getCurrency());
+    }
 }

@@ -22,4 +22,8 @@ public class Money {
     public Money add(Money another) {
         return new Money(this.currency, this.minorUnits + another.minorUnits);
     }
+
+    public Money roundup() {
+        return null;
+    }
 }
