@@ -21,6 +21,9 @@ services:
       - './roundup:/app'
     working_dir: '/app'
     entrypoint: '/bin/bash -c'
+    environment:
+#      STARLING_HOST: https://api-sandbox.starlingbank.com
+      STARLING_HOST: http://stub:3000
     command:
       - |
         tail -f /dev/null
