@@ -18,4 +18,9 @@ public class Money {
     public int getMinorUnits() {
         return minorUnits;
     }
+
+    public Money add(Money money2) {
+        return null;
+    }
+
 }
