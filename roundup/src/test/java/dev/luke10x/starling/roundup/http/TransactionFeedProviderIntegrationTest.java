@@ -41,7 +41,8 @@ public class TransactionFeedProviderIntegrationTest {
         HttpRequest request = HttpRequest.request()
                 .withMethod("GET")
                 .withPath("/api/v2/feed/account/ac82f660-5442-4b78-9038-2b72b1206390/category/" +
-                        "2eb42e49-f275-4019-8707-81a0637e7206");
+                        "2eb42e49-f275-4019-8707-81a0637e7206")
+                .withHeader("Authorization", "Bearer Test-Valid-Access-Token");
 
 
         File file = new File(getClass().getClassLoader().getResource("./feed-response.json").getPath());

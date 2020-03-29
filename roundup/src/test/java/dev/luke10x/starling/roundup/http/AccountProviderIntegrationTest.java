@@ -36,7 +36,9 @@ public class AccountProviderIntegrationTest {
 
         HttpRequest request = HttpRequest.request()
                 .withMethod("GET")
-                .withPath("/api/v2/accounts");
+                .withPath("/api/v2/accounts")
+                .withHeader("Authorization", "Bearer Test-Valid-Access-Token");
+
 
         File file = new File(getClass().getClassLoader().getResource("./accounts-response.json").getPath());
         byte[] fixture = Files.readAllBytes(file.toPath());
@@ -62,7 +64,7 @@ public class AccountProviderIntegrationTest {
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
         AccountsProvider accountsProvider = new HttpAccountsProvider(restTemplate, starlingHost);
 
-        AccountsResponse response = accountsProvider.fetch();
+         AccountsResponse response = accountsProvider.fetch();
 
         assertNotNull(response);
     }
