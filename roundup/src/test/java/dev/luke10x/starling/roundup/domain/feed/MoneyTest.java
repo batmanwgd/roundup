@@ -3,6 +3,7 @@ package dev.luke10x.starling.roundup.domain.feed;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -38,5 +39,12 @@ public class MoneyTest {
 
         assertEquals(23, roundup.getMinorUnits());
         assertEquals("GBP", roundup.getCurrency());
+    }
+
+    @Test
+    void printsNicely() {
+        Money hundredDollars = new Money("USD", 10000);
+
+        assertEquals("USD 100.00", hundredDollars.toString());
     }
 }
