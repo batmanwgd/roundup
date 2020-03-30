@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,9 +40,11 @@ public class HttpFeedProvider implements FeedProvider {
 
         LOG.info("\uD83D\uDCC6 FETCHING FEED: "+from.toString()+" - "+to.toString());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         String url = starlingHost
                 + "/api/v2/feed/account/" + account.getAccountUid()
-                + "/category/" + account.getDefaultCategory();
+                + "/category/" + account.getDefaultCategory()
+                + "?changesSince=" + from.atStartOfDay(ZoneId.of("UTC")).format(formatter);
 
         try {
             return Objects.requireNonNull(restTemplate
