@@ -48,8 +48,15 @@ public class HttpFeedProviderIntegrationTest {
                 .withMethod("GET")
                 .withPath("/api/v2/feed/account/ac82f660-5442-4b78-9038-2b72b1206390/category/" +
                         "2eb42e49-f275-4019-8707-81a0637e7206")
+                .withQueryStringParameter("changesSince","2020-03-16T00:00:00.000Z")
                 .withHeader("Authorization", "Bearer Test-Valid-Access-Token");
 
+        HttpRequest requestForDataRangeWithNoTransactions = HttpRequest.request()
+                .withMethod("GET")
+                .withPath("/api/v2/feed/account/ac82f660-5442-4b78-9038-2b72b1206390/category/" +
+                        "2eb42e49-f275-4019-8707-81a0637e7206")
+                .withQueryStringParameter("changesSince","2020-03-09T00:00:00.000Z")
+                .withHeader("Authorization", "Bearer Test-Valid-Access-Token");
 
         File file = new File(getClass().getClassLoader().getResource("./feed-response.json").getPath());
         byte[] fixture = Files.readAllBytes(file.toPath());
@@ -59,6 +66,7 @@ public class HttpFeedProviderIntegrationTest {
                 .withBody(fixture);
 
         starlingAPI.when(request).respond(response);
+        starlingAPI.when(requestForDataRangeWithNoTransactions).respond(response);
     }
 
     @AfterAll
@@ -96,7 +104,7 @@ public class HttpFeedProviderIntegrationTest {
     }
 
     @Test
-    void fetchesFeedFromHttpForDataRangeWithNoTransations() throws FeedNotFoundException {
+    void fetchesFeedFromHttpForDataRangeWithNoTransactions() throws FeedNotFoundException {
 
         String starlingHost = "http://localhost:" + starlingAPI.getPort();
 
