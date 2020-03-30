@@ -58,7 +58,7 @@ with Maven. But I run it all inside docker container.
 ![Class diagram](./classes.svg)
 
 
-### Building and running
+## Building and running
 
 Once files checked from git please run:
 
@@ -80,3 +80,5 @@ To run it against actual sandbox API we need to change these environment variabl
 
     export ROUNDUP_STARLING_HOST=https://api-sandbox.starlingbank.com
     export ROUNDUP_ACCESS_TOKEN=< your sandbox application access token >
+
+Get your access token from [Starling Developers Portal](https://developer.starlingbank.com/sandbox/select).
